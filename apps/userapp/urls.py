@@ -3,4 +3,5 @@ from userapp import views
 
 urlpatterns = [
     path('regist/', views.regist),
+    path('upload/', views.upload),
 ]

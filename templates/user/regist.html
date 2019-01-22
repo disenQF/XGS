@@ -2,36 +2,110 @@
 
 {% block content %}
 
-    <form class="form form-horizontal">
+    <form class="form form-horizontal"
+          action="/user/regist/"
+          method="post" name="regist_form">
         <div class="form-group">
             <label class="col-xs-3 text-right" for="username">用户名</label>
             <div class="col-xs-5">
-                <input class="form-control" type="text" name="" id="username"
+                <input class="form-control" type="text" name="username" id="username"
                        placeholder="输入您的用户名">
             </div>
         </div>
         <div class="form-group">
             <label class="col-xs-3 text-right" for="password">口令</label>
             <div class="col-xs-5">
-                <input class="form-control" type="password" name="" id="password"
+                <input class="form-control" type="password" name="password" id="password"
                        placeholder="输入您的口令">
             </div>
         </div>
         <div class="form-group">
             <label class="col-xs-3 text-right" for="password2">重复口令</label>
             <div class="col-xs-5">
-                <input class="form-control" type="password" name="" id="password2"
+                <input class="form-control" type="password" name="password2" id="password2"
                        placeholder="再次输入您的口令">
             </div>
         </div>
 
         <div class="form-group">
             <div class="text-center">
-                <button class="btn btn-success" type="button">注册</button>
+                <button class="btn btn-success" type="button" onclick="regist()">注册</button>
                 <a href="/user/login/" class="btn btn-link">已有用户，直接登录</a>
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-xs-3 text-right">用户头像</label>
+            <div class="col-xs-6">
+               <img src="/static/icons/add.png"  id="preImg"
+                    width="100" height="100"
+                    style="border: 1px solid red;padding: 5px;"
+                    onclick="selector.click()">
+                <p>
+                    <h4>头像要求：</h4>
+                </p>
+                <p>
+                    只支持jpg, png格式的图片
+                </p>
+                <p>
+                    图片大小不能超出2M
+                </p>
+            </div>
 
+        </div>
+        {% csrf_token %}
+        <input type="hidden" name="photo" id="photo">
     </form>
+    <input type="file"
+           id="selector" style="display: none"
+           onchange="upload_img(this.files[0])">
 
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        function regist() {
+            alert('aaaa')
+            form = document.getElementsByName('regist_form')[0]
+            alert(form)
+            form.submit()
+        }
+
+        function upload_img(file) {
+            // file.name 文件名, file.size 文件大小, file.type 文件类型
+            if(file.type == 'image/png' || file.type == 'image/jpeg'){
+                if(file.size <= 2048*1024){
+                    // 上传图片-ajax
+                    var request = new XMLHttpRequest()
+                    url = '/user/upload/'  // 上传图片的服务器的接口
+                    request.open('POST', url, true)
+                    request.onload = function (ev) {
+                        if(request.status == 200 && request.readyState == 4){
+                            // 请求成功
+                            data = JSON.parse(request.responseText)
+                            if(data.msg == 1){
+                                // 显示 图片
+                                $('#preImg').attr('src', '/static/'+data.path)
+
+                                // 将上传图片保存服务中的路径写入到 photo隐藏字段中
+                                $('#photo').attr('value', data.path)
+
+                            }
+                        }
+                    }
+
+                    var formdata = new FormData()  // 创建FormData表单数据对象
+                    formdata.append('photo', file)  // 文件的表单字段
+                    formdata.append('username', 'disen')  // 普通的表单字段
+
+                    request.send(formdata)  // formdata 可以上传最大到4G的文件
+
+                }else{
+                     alert('当前文件的大小超过2M: '+file.size)
+                }
+            }else{
+                alert('当前文件的类型不支持'+file.type)
+            }
+        }
+    </script>
 {% endblock %}
