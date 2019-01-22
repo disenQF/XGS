@@ -2,8 +2,7 @@ from django.db import models
 
 # Create your models here.
 class OrderRecord(models.Model):
-    date = models.DateField(auto_now_add=True,
-                            verbose_name='日期')
+    date = models.DateField(verbose_name='日期')
     order_count = models.IntegerField(verbose_name='订单数量')
     order_price = models.FloatField(verbose_name='订单总金额')
     order_cancel_count = models.IntegerField(verbose_name='取消订单数量')

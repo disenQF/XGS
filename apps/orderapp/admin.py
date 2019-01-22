@@ -27,11 +27,11 @@ class OrderRecordAdmin(object):
     data_charts = {
         "order": {'title': u"订单统计",
                   "x-field": "date",
-                  "y-field": ("order_count", "order_price"),
-                  "order": ('date',)},
-        "order_cancel": {'title': u"取消订单统计",
+                  "y-field": ("order_count", "order_cancel_count"),
+                  "order": ('date', )},
+        "order_cancel": {'title': u"订单金额(万元)",
                          "x-field": "date",
-                         "y-field": ('order_cancel_count', 'order_cancel_price'), "order": ('date',)},
+                         "y-field": ('order_price', 'order_cancel_price'), "order": ('date',)},
         "per_month": {'title': u"月度统计",
                       "x-field": "_chart_month",
                       "y-field": ("order_count",),
@@ -43,5 +43,5 @@ class OrderRecordAdmin(object):
     }
 
     def _chart_month(self,  obj):
-        print('--------->',obj.date)
-        return obj.date.strftime("%m")
+        print('--------->', obj.date)
+        return obj.date.strftime("%B")
