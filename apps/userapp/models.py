@@ -23,6 +23,11 @@ class UserProfile(base.BaseModel):
                              blank=True,
                              null=True)
 
+    photo = models.CharField(verbose_name='用户头像',
+                             blank=True,
+                             null=True,
+                             max_length=200)
+
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         if not self.password.startswith('pbkdf2_sha256') and len(self.password) < 30:

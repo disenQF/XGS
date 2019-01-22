@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form class="form form-horizontal">
+        <div class="form-group">
+            <label class="col-xs-3 text-right" for="username">用户名</label>
+            <div class="col-xs-5">
+                <input class="form-control" type="text" name="" id="username"
+                       placeholder="输入您的用户名">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-3 text-right" for="password">口令</label>
+            <div class="col-xs-5">
+                <input class="form-control" type="password" name="" id="password"
+                       placeholder="输入您的口令">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-3 text-right" for="password2">重复口令</label>
+            <div class="col-xs-5">
+                <input class="form-control" type="password" name="" id="password2"
+                       placeholder="再次输入您的口令">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="text-center">
+                <button class="btn btn-success" type="button">注册</button>
+                <a href="/user/login/" class="btn btn-link">已有用户，直接登录</a>
+            </div>
+        </div>
+
+    </form>
+
+{% endblock %}
