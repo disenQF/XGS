@@ -1,3 +1,4 @@
+import json
 import os
 import uuid
 
@@ -10,31 +11,41 @@ from django.views.decorators.csrf import csrf_exempt
 
 from XGS import settings
 from userapp.models import UserProfile
-
+from userapp.forms import UserForm
 
 def regist(request):
+
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        photo = request.POST.get('photo')
+        form = UserForm(request.POST)  # 自动将POST中的数据提取出来
 
-        # 按照文件路径分隔出文件名
-        file_name = os.path.split(photo)[-1]
+        # 验证是否存在错误
+        if form.is_valid():
+            # 按照文件路径分隔出文件名
 
-        # 将临时的文件，变成持久文件
-        full_photo = os.path.join(settings.BASE_DIR, 'static/'+photo)
-        to_full_photo = os.path.join(settings.BASE_DIR, f'static/images/{file_name}')
-        os.rename(full_photo, to_full_photo)
+            # cleaned_data 是去除所有字段两边空白后的数据字典
+            photo = form.cleaned_data.get('photo')
+            print(photo)
+            if photo:
+                file_name = os.path.split(photo)[-1]
 
-        UserProfile.objects.create(username=username,
-                                   password=password,
-                                   photo=f'images/{file_name}')
+                # 将临时的文件，变成持久文件
+                full_photo = os.path.join(settings.BASE_DIR, 'static/'+photo)
+                to_full_photo = os.path.join(settings.BASE_DIR, f'static/images/{file_name}')
+                os.rename(full_photo, to_full_photo)
 
-        # 删除tmp临时文件目录
-        tmp_dir = os.path.join(settings.BASE_DIR, 'static/images/tmp')
-        os.system(f'rm -rf {tmp_dir}')
+                form.photo = f'images/{file_name}'
 
-        return redirect('/admin/')
+                # 删除tmp临时文件目录
+                tmp_dir = os.path.join(settings.BASE_DIR, 'static/images/tmp')
+                os.system(f'rm -rf {tmp_dir}')
+
+            form.save()  # 保存数据
+
+            return redirect('/admin/')
+        else:
+            # 将errors的html字符串转成json字符串
+            errors = json.loads(form.errors.as_json())
+            print(errors)
 
     return render(request, 'user/regist.html', locals())
 
@@ -47,6 +58,8 @@ def upload(request):
 
     # 将上传的文件保存到 /static/images/tmp目录中
     dir_ = os.path.join(settings.BASE_DIR, 'static/images/tmp')
+    if not os.path.exists(dir_):
+        os.mkdir(dir_)
 
     # 生成新的文件名
     file_name = uuid.uuid4().hex+ ('.jpg' if photoFile.content_type.endswith('jpeg') else '.png')
