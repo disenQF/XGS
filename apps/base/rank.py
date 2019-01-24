@@ -1,6 +1,7 @@
 import base
 from goodsapp.models import Goods
 
+
 def add_week_rank(goods_id):
     redis = base.rd
     has_rank = redis.exists('week_rank')

@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'userapp',
     'orderapp',
     'activeapp',
-    'goodsapp'
+    'goodsapp',
+    'djcelery'
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,13 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/static/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
+
+# -------Celery配置------
+import djcelery
+djcelery.setup_loader()
+BROKER_URL = 'redis://127.0.0.1:6379/1'
+CELERY_IMPORTS = ('goodsapp.tasks', )
+CELERY_TIMEZONE = 'Asia/Shanghai'
+
+# --------Celery End-----
+
