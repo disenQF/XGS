@@ -2,6 +2,7 @@ import json
 import os
 import uuid
 
+from django.contrib.auth.hashers import check_password
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
@@ -72,3 +73,25 @@ def upload(request):
     # 响应json数据
     return JsonResponse({'msg': 1,
                          'path': f'images/tmp/{file_name}'})
+
+
+def login(req):
+    if req.method == 'POST':
+        username = req.POST.get('username')
+        password = req.POST.get('password')
+
+        result = UserProfile.objects.filter(username=username)
+        if not result.exists():
+            errors = {'username':f'{username} 不存在'}
+        else:
+            login_user = result.first()
+            if check_password(password, login_user.password):
+                req.session['login_user'] = {
+                    'user_id': login_user.id,
+                    'username': login_user.username,
+                    'photo': login_user.photo
+                }
+            else:
+                errors = {'password':'口令不正确'}
+
+    return render(req, 'user/login.html', locals())
