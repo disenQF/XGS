@@ -1,0 +1,124 @@
+
+.category {
+    background-color: palevioletred;
+    color: white;
+    font-size: medium;
+    padding: 5px;
+    box-shadow: 5px 5px 5px red;
+    border-radius: 5px;
+}
+
+.category ul, li {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.category li {
+    float: left;
+    padding: 5px;
+    margin: 2px;
+}
+
+.category li:hover {
+    background-color: powderblue;
+    cursor: pointer;
+    font-size: large;
+    border-radius: 5px;
+}
+
+.active {
+    background-color: cadetblue;
+    border-radius: 5px;
+}
+
+.category a {
+    text-decoration: none;
+}
+
+.rank {
+    border: 1px dotted lightgray;
+    margin: 5px;
+    padding: 2px;
+}
+
+.rank h4 {
+    text-align: center;
+    margin: 0;
+    background-color: palevioletred;
+    padding: 5px;
+    color: white;
+}
+
+.rank ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+.rank li {
+    border-bottom: 1px dotted lightgray;
+}
+
+.rank li:nth-last-child(1) {
+    border-bottom: none;
+}
+
+.rank li span:nth-last-child(1) {
+    margin-left: 20px;
+}
+
+.no {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: lightgray;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    margin: 2px;
+}
+
+.no1 {
+    background-color: red;
+}
+
+.no2 {
+    background-color: orangered;
+}
+
+.no3 {
+    background-color: palevioletred;
+}
+
+.goods {
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.goods ul, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.goods li {
+    float: left;
+    margin: 5px;
+}
+
+.goods dt {
+    overflow: hidden;
+    box-shadow: 2px 2px 5px palevioletred;
+    margin: 5px;
+}
+
+
+.goods img:hover {
+    transform: scale3d(1.2, 1.2, 1.2);
+    transition: transform linear 1s;
+}
+
+
+
+

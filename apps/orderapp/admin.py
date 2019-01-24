@@ -1,6 +1,6 @@
 import xadmin as admin
 
-from orderapp.models import OrderRecord
+from orderapp.models import OrderRecord, Order
 
 
 # Register your models here.
@@ -45,3 +45,8 @@ class OrderRecordAdmin(object):
     def _chart_month(self,  obj):
         print('--------->', obj.date)
         return obj.date.strftime("%B")
+
+
+@admin.sites.register(Order)
+class OrderAdmin(object):
+    list_display = ('title', 'price', 'pay_statue', 'pay_type')
