@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-3">
+                <img src="/static/media/{{ goods.cover }}"
+                     width="180px"
+                     height="240px">
+            </div>
+            <div class="col-xs-9">
+                <h3 style="width: 400px">{{ goods.name }}</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-9" style="padding: 10px">
+
+                <button class="btn btn-danger">抢购</button>
+                <button class="btn btn-info">收藏</button>
+                <button class="btn btn-success">加入购物车</button>
+
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

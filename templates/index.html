@@ -10,56 +10,32 @@
                 <div class="category">
                     <ul>
                         <li class="active">所有分类</li>
-                        <li>男装</li>
-                        <li>女装</li>
-                        <li>精品</li>
+                        {% for category in categorys %}
+                            <li>{{ category.title }}</li>
+                        {% endfor %}
+
                         <div class="clearfix"></div>
                     </ul>
                 </div>
                 <div class="goods">
                     <ul>
-                        <li>
-                            <dl>
-                                <dt>
-                                    <a href="/goods/show/1/">
-                                        <img src="/static/media/goods/1ff428a7-71d0-41c6-b019-3331d6c2a88f.jpg"
-                                             width="200px" height="240px">
-                                    </a>
-                                </dt>
-                                <dd>Disen冬装</dd>
-                                <dd>￥900 原价19000</dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl>
-                                <dt>
-                                    <img src="/static/media/goods/1ff428a7-71d0-41c6-b019-3331d6c2a88f.jpg"
-                                         width="200px" height="240px">
-                                </dt>
-                                <dd>Disen冬装</dd>
-                                <dd>￥900 原价19000</dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl>
-                                <dt>
-                                    <img src="/static/media/goods/1ff428a7-71d0-41c6-b019-3331d6c2a88f.jpg"
-                                         width="200px" height="240px">
-                                </dt>
-                                <dd>Disen冬装</dd>
-                                <dd>￥900 原价19000</dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl>
-                                <dt>
-                                    <img src="/static/media/goods/1ff428a7-71d0-41c6-b019-3331d6c2a88f.jpg"
-                                         width="200px" height="240px">
-                                </dt>
-                                <dd>Disen冬装</dd>
-                                <dd>￥900 原价19000</dd>
-                            </dl>
-                        </li>
+                        {% for goods in goods_list %}
+
+
+
+                            <li>
+                                <dl>
+                                    <dt style="height: 200px;width: 180px">
+                                        <a href="/goods/show/{{ goods.id }}/">
+                                            <img src="/static/media/{{ goods.cover }}"
+                                                 width="180px" height="200px">
+                                        </a>
+                                    </dt>
+                                    <dd>{{ goods.name|truncatechars:10 }}</dd>
+                                    <dd>￥ {{ goods.price }}</dd>
+                                </dl>
+                            </li>
+                        {% endfor %}
                         <div class="clearfix"></div>
                     </ul>
                 </div>

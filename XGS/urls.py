@@ -17,12 +17,17 @@ from django.shortcuts import render
 from django.urls import path, include
 import xadmin as admin
 
+from goodsapp.models import Category, Goods
+
 def to_index(request):
-    return render(request, 'index.html')
+    categorys = Category.objects.filter(level=1)
+    goods_list = Goods.objects.all()
+    return render(request, 'index.html', locals())
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('userapp.urls')),
+    path('goods/', include('goodsapp.urls')),
     path('', to_index)
 ]
