@@ -46,26 +46,12 @@
                     <div class="rank">
                         <h4>周排行</h4>
                         <ul>
-                            <li>
-                                <span class="no no1">1</span>
-                                <span>Disen男装</span>
-                            </li>
-                            <li>
-                                <span class="no no2">2</span>
-                                <span>Disen男装</span>
-                            </li>
-                            <li>
-                                <span class="no no3">3</span>
-                                <span>Disen男装</span>
-                            </li>
-                            <li>
-                                <span class="no">4</span>
-                                <span>Disen男装</span>
-                            </li>
-                            <li>
-                                <span class="no">5</span>
-                                <span>Disen男装</span>
-                            </li>
+                            {% for week_goods, score in week_rank %}
+                                <li>
+                                    <span class="no {% if forloop.counter <= 3 %}no{{ forloop.counter }}{% endif %}">{{ forloop.counter }}</span>
+                                    <span><a href="/goods/show/{{ week_goods.id }}/">{{ week_goods.name }}</a></span>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
 

@@ -18,10 +18,13 @@ from django.urls import path, include
 import xadmin as admin
 
 from goodsapp.models import Category, Goods
+from base import rank
 
 def to_index(request):
     categorys = Category.objects.filter(level=1)
     goods_list = Goods.objects.all()
+
+    week_rank = rank.top_week_rank()
     return render(request, 'index.html', locals())
 
 
