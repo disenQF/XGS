@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'orderapp',
     'activeapp',
     'goodsapp',
-    'djcelery'
+    'djcelery',
+    'haystack',
 ]
 
 MIDDLEWARE = [
@@ -146,3 +147,15 @@ CELERY_TIMEZONE = 'Asia/Shanghai'
 
 # --------Celery End-----
 
+
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch2_backend.Elasticsearch2SearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'goods_index',
+    },
+}
+
+# 增、删、改时自动更新索引
+HAYSTACK_SIGNAL_PROCCESSOR = 'haystack.signals.RealtimeSignalProcessor'

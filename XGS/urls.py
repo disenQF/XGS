@@ -20,6 +20,7 @@ import xadmin as admin
 from goodsapp.models import Category, Goods
 from base import rank
 
+
 def to_index(request):
     categorys = Category.objects.filter(level=1)
     goods_list = Goods.objects.all()
@@ -32,5 +33,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('userapp.urls')),
     path('goods/', include('goodsapp.urls')),
+    path('search/', include('haystack.urls')),
     path('', to_index)
 ]
